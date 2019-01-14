@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  sip-api:
+    container_name: sip-api
+    image: sip-api
+    build: .
+    volumes:
+      - sip-api-volume:/opt/app
+    environment:
+      - APP_ENV=development
+    command: bundle exec rails s
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - sip-network
+
+networks:
+  sip-network:
+    name: sip-network
+
+volumes:
+  sip-api-volume:
+    name: sip-api-volume
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}"
