@@ -6,7 +6,5 @@ RUN apt-get update &&\
 
 WORKDIR /opt/app
 
-RUN bundle config --global frozen 1
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
-

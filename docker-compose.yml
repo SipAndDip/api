@@ -9,12 +9,26 @@ services:
       - sip-api-volume:/opt/app
     environment:
       - APP_ENV=development
+      - DB_HOST=sip-db
+      - DB_USERNAME=postgres
     command: bundle exec rails s
     stdin_open: true
     tty: true
     ports:
       - "3000:3000"
     restart: always
+    networks:
+      - sip-network
+    depends_on:
+      - sip-db
+
+  sip-db:
+    image: postgres
+    restart: always
+    volumes:
+      - sip-database-volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
     networks:
       - sip-network
 
@@ -30,3 +44,4 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
       device: ":${PWD}"
+  sip-database-volume:
