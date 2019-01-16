@@ -6,5 +6,12 @@ RUN apt-get update &&\
 
 WORKDIR /opt/app
 
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+ENV BUNDLE_PATH=/bundle \
+    BUNDLE_BIN=/bundle/bin \
+    GEM_HOME=/bundle
+ENV PATH="${BUNDLE_BIN}:${PATH}"

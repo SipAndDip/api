@@ -6,6 +6,7 @@ services:
     image: sip-api
     build: .
     volumes:
+      - sip-bundle-cache-volume:/bundle
       - sip-api-volume:/opt/app
     environment:
       - APP_ENV=development
@@ -45,3 +46,4 @@ volumes:
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
       device: ":${PWD}"
   sip-database-volume:
+  sip-bundle-cache-volume:
