@@ -4,6 +4,8 @@ RUN apt-get update &&\
     apt-get install -y nodejs &&\
     apt-get clean
 
+ENV RAILS_ROOT /opt/app/
+RUN mkdir -p $RAILS_ROOT
 WORKDIR /opt/app
 
 COPY ./docker-entrypoint.sh /
